@@ -10,7 +10,7 @@ export const environment = {
    *$ autherzation Server Config
    */
   autherzationLoginBaseUrl: 'https://authserver.obayd.online/realms/realm1',
-  clientId: 'carrental-backend-1',
+  clientId: 'carrental-fronend-1',
   grantType: {
     login: 'password' as string,
     refresh: 'refresh_token' as string,

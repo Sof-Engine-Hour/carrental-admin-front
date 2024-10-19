@@ -11,6 +11,8 @@ import { PageHeaderComponent } from '@shared';
 import { TablesDataService } from '../data.service';
 import { TablesKitchenSinkEditComponent } from './edit/edit.component';
 
+import { CarService } from '../car.service';
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -31,6 +33,7 @@ export class OverviewComponent {
   private readonly translate = inject(TranslateService);
   private readonly dataSrv = inject(TablesDataService);
   private readonly dialog = inject(MtxDialog);
+  private readonly carService = inject(CarService)
 
   columns: MtxGridColumn[] = [
     {

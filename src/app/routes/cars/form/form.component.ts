@@ -1,13 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { ToastrService } from 'ngx-toastr';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import { PageHeaderComponent } from '@shared';
-import { Car , MappedCar} from '../car';
+import { BrandResponse, CarRequest , MappedCar} from '../car';
 import { CarService } from '../car.service';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MtxSelectModule } from '@ng-matero/extensions/select';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -23,13 +27,19 @@ import { CarService } from '../car.service';
     FormlyModule ,
     FormlyMatDatepickerModule ,
     PageHeaderComponent,
+    // MatFormFieldModule ,
+    // MtxSelectModule ,
+
   ],
 })
 export class FormComponent {
   private readonly toast = inject(ToastrService);
   private readonly carService = inject(CarService)
 
-  // Advanced Layout
+
+  brandOptions = new BehaviorSubject<any[]>([]);
+  modelOptions = new BehaviorSubject<any[]>([]);
+
   form2 = new FormGroup({});
   model2 = {};
   // model :Partial<Car> = {} ;
@@ -39,11 +49,22 @@ export class FormComponent {
       fieldGroup: [
         {
           className: 'col-sm-6',
-          type: 'input',
+          type: 'select',
           key: 'brand',
           templateOptions: {
             label: 'Brand',
             required: true,
+            options : this.brandOptions.asObservable() ,
+            labelProp: 'name',
+            valueProp:'id' ,
+            placeholder: 'Choose A Brand',
+            focus : () => this.updateBrands() ,
+            change: (field: FormlyFieldConfig) => {
+              const selectedValue : number = field.formControl?.value as number;
+              this.updateModels(selectedValue) ;
+              console.warn(selectedValue);
+              
+            },            
           },
           
           validation: {
@@ -53,16 +74,23 @@ export class FormComponent {
           },
         },
         {
-          className: 'col-sm-6', // Add this for proper layout
-          type: 'datepicker',
-          key: 'year',
+          className: 'col-sm-6',
+          type: 'select',
+          key: 'model',
           templateOptions: {
-            label: 'Select Car Year',
+            label: 'Model',
             required: true,
-            placeholder: 'Choose a date',
-            description :'The Year Where The Car Was Factory It'
+            options : this.modelOptions.asObservable() ,
+            labelProp: 'name',
+
+            valueProp:'id' ,
+            placeholder: 'Choose A Model',
+
+            onChange: (event: any) => {
+            },
             
           },
+          
           validation: {
             messages: {
               required: (error, field: FormlyFieldConfig) => `${field.props?.label || 'This field'} is required`,
@@ -95,15 +123,15 @@ export class FormComponent {
         {
           className: 'col-sm-3', // Add this for proper layout
           type: 'input',
-          key: 'engineSize',
+          key: 'price',
           templateOptions: {
-            label: 'Engine Size',
+            label: 'Price',
             required: true,
             placeholder: 'Mileage',
             type: 'number',
             min:5 ,
             max:20 ,
-            description:"Engine Size Of The Car"
+            description:"Price Of The Rental"
           },
           validation: {
             messages: {
@@ -114,14 +142,11 @@ export class FormComponent {
         {
           className: 'col-sm-3', // Add this for proper layout
           type: 'input',
-          key: 'numberOfDoors',
+          key: 'color',
           templateOptions: {
-            label: 'Number Of Doors',
-            required: true,
-            placeholder: 'Number Of Doors',
-            type: 'number',
-            min:2 ,
-            max:8 ,
+            label: 'Color',
+            placeholder: 'Color',
+            type: 'input',
           },
           validation: {
             messages: {
@@ -131,16 +156,14 @@ export class FormComponent {
         },
         {
           className: 'col-sm-3', // Add this for proper layout
-          type: 'input',
-          key: 'topSpeed',
+          type: 'datepicker',
+          key: 'year',
           templateOptions: {
-            label: 'Top Speed',
+            label: 'Select Car Year',
             required: true,
-            placeholder: 'Top Speed',
-            type: 'number',
-            min:80 ,
-            max:299 ,
-            description:"To Speed KM/H"
+            placeholder: 'Choose a date',
+            description :'The Year Where The Car Was Factory It'
+            
           },
           validation: {
             messages: {
@@ -148,69 +171,17 @@ export class FormComponent {
             },
           },
         },
-        // {
-        //   className: 'col-sm-3',
-        //   type: 'combobox',
-        //   key: 'cityId',
-        //   templateOptions: {
-        //     label: 'City',
-        //     options: [
-        //       { id: 1, name: '北京' },
-        //       { id: 2, name: '上海' },
-        //       { id: 3, name: '广州' },
-        //       { id: 4, name: '深圳' },
-        //     ],
-        //     labelProp: 'name',
-        //     valueProp: 'id',
-        //     required: true,
-        //     description: 'This is a custom field type.',
-        //   },
-        // },
-        // {
-        //   className: 'col-sm-3',
-        //   type: 'input',
-        //   key: 'zip',
-        //   templateOptions: {
-        //     type: 'number',
-        //     label: 'Zip',
-        //     max: 99999,
-        //     min: 0,
-        //     pattern: '\\d{5}',
-        //   },
-        // },
-      ],
-    },
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-       
-        {
-          className: 'col-sm-3', // Add this for proper layout
-          type: 'input',
-          key: 'price',
-          templateOptions: {
-            label: 'Price',
-            required: true,
-            placeholder: 'Price',
-            type: 'number',
-            description:"Price En DHs"
-          },
-          validation: {
-            messages: {
-              required: (error, field: FormlyFieldConfig) => `${field.props?.label || 'This field'} is required`,
-            },
-          },
-        },
-        
       ],
     },
   ];
 
-  // submit() {
-  //   if (this.form.valid) {
-  //     this.showToast(this.model);
-  //   }
-  // }
+
+  ngOnInit(): void {//
+
+    // this.updateBrands() ;
+  }
+
+
 
   submit2() {
     if (this.form2.valid) {
@@ -218,11 +189,11 @@ export class FormComponent {
       /**
        * /cast
        */
-      const car: Car = this.model2 as Car;
-      console.log(this.form2.value) ;
-      // cars = MappedCar<this.form2.value , cars> ;
+      const car: CarRequest = this.model2 as CarRequest;
+      console.log(car) ;
+
       this.carService.saveCar([car]).subscribe({
-        next: (cars) => this.toast.success("car with id " + cars[0].brand + " have added"),
+        next: (cars) => this.toast.success(`car with id: ${cars[0].id} have added`),
         // error: () => this.toast.error("404 somthing warrng"),
       }) 
     }
@@ -235,4 +206,36 @@ export class FormComponent {
     this.toast.success(JSON.stringify(obj));
   }
 
+  
+
+
+  // getBrands(): Observable<BrandResponse[]> {
+    
+  //   return this.brandsResponseObs ;
+  // }
+
+  updateBrands() :void {
+
+    this.brandOptions.subscribe({
+      next : (options)=>{
+        if (options.length === 0) {
+          this.carService.getListOfBrands().subscribe({
+            next: (options: BrandResponse[]) => {
+              this.brandOptions.next(options);
+            },
+          })
+        }
+      }
+    })
+
+  }
+
+  updateModels(id : number):void{
+    this.carService.getListOfModels(id).subscribe(
+      {
+        next : (models) => this.modelOptions.next(models) ,
+        error : ()=> this.toast.error("There is error with fetching the models")
+      }
+    )
+  }
 }

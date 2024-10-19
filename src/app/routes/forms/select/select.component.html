@@ -62,7 +62,7 @@
           <mat-label>Select car</mat-label>
           <mtx-select [(ngModel)]="selectedCarId">
             @for (car of cars; track car) {
-              <mtx-option [value]="car.id" [disabled]="car.disabled">{{car.name}}</mtx-option>
+              <mtx-option [value]="car.id" [attr.data-key]="car.id" [disabled]="car.disabled">{{car.name}}</mtx-option>
             }
             <mtx-option [value]="'custom'">Custom</mtx-option>
           </mtx-select>
