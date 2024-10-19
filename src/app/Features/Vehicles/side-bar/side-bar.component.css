@@ -1,0 +1,23 @@
+/* right-sidebar.component.css */
+.right-sidebar {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    right: -50vw;
+    height: 90vh;
+    width: 50vw;
+    background-color: white;
+    display: none;
+    box-shadow: -5px 0px rgba(0, 0, 0, 0.377);
+}
+
+.right-sidebar.open {
+    right: 0; 
+    display: block;
+}
+
+/* .right-sidebar button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+} */

@@ -5,22 +5,22 @@
 export const environment = {
   production: false,
   useHash: false,
-  baseUrl:"" ,
+  baseUrl: '',
   /**
    *$ autherzation Server Config
-  */
-  autherzationLoginBaseUrl:"http://localhost:8081/realms/realm1" ,
-  clientId :"client1" ,
-  grantType : {
-    login: "password" as string ,
-    refresh:"refresh_token" as string,
+   */
+  autherzationLoginBaseUrl: 'https://authserver.obayd.online/realms/realm1',
+  clientId: 'carrental-backend-1',
+  grantType: {
+    login: 'password' as string,
+    refresh: 'refresh_token' as string,
   },
-  tokenKey:"ng-matero-token" ,
-  tokenType:"bearer" ,
+  tokenKey: 'ng-matero-token',
+  tokenType: 'bearer',
   /**
    * $backend Serve 1
    */
-  backend1 : "http://localhost:8080/api" ,
+  backend1: 'https://rentals.obayd.online/api/v1',
 };
 
 /*

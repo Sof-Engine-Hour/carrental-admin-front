@@ -5,15 +5,14 @@ import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarService {
-  
-  private readonly http = inject(HttpClient)
+  private readonly http = inject(HttpClient);
 
-  constructor() { }
+  constructor() {}
 
-  saveCar(cars : Car []) : Observable<Car[]> {
-    return this.http.post<Car[]>(environment.backend1 + "/vehicules" , cars) ;
+  saveCar(cars: Car[]): Observable<Car[]> {
+    return this.http.post<Car[]>(environment.backend1 + '/vehicules', cars);
   }
 }
