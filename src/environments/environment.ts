@@ -9,8 +9,8 @@ export const environment = {
   /**
    *$ autherzation Server Config
   */
-  autherzationLoginBaseUrl:"http://localhost:8081/realms/realm1" ,
-  clientId :"client1" ,
+  autherzationLoginBaseUrl:"https://authserver.obayd.online/realms/realm1" ,
+  clientId :"carrental-fronend-1" ,
   grantType : {
     login: "password" as string ,
     refresh:"refresh_token" as string,
@@ -20,7 +20,7 @@ export const environment = {
   /**
    * $backend Serve 1
    */
-  backend1 : "http://localhost:8080/api" ,
+  backend1 : "https://rentals.obayd.online/api/v1" ,
 };
 
 /*

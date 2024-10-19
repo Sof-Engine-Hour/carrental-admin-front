@@ -50,13 +50,13 @@
           "route": "overview",
           "name": "overview",
           "type": "link",
-          "icon": "colorize"
+          "icon": "table_chart"
         },
         {
           "route": "add-car",
           "name": "add-car",
           "type": "link",
-          "icon": "colorize"
+          "icon": "add_to_photos"
         }
 
       ],
