@@ -1,1 +1,1 @@
-export { HeaderVehiclesComponent as HeaderVehicles } from './Index/header-vehicles/header-vehicles.component';
+export { HeaderVehiclesComponent as HeaderVehicles } from './header-vehicles/header-vehicles.component';

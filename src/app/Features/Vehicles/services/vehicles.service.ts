@@ -12,4 +12,12 @@ export class VehiclesService {
   getVehicles(page: number, size: number): Observable<any> {
     return this.http.get<any>(environment.backend1 + `/vehicules?page=${page}&size=${size}`);
   }
+
+  getVehiclesById(id: number): Observable<any> {
+    return this.http.get<any>(environment.backend1 + `/vehicules/${id}`);
+  }
+
+  deleteVehicles(id: number): Observable<any> {
+    return this.http.delete<any>(environment.backend1 + `/vehicules/${id}`);
+  }
 }

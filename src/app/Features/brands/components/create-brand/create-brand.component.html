@@ -1,0 +1,37 @@
+<div>
+    <form [formGroup]="formCreateBrand" method="post" class="row m-t-8" (ngSubmit)="onSubmit($event)">
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Name</mat-label>
+            <input name="name" formControlName="name" type="text" matInput placeholder="Name">
+            <mat-error *ngIf="f.name.invalid && f.name.touched">
+                Name is required and must be at least 3 characters long
+            </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Country of Origin</mat-label>
+            <input name="countryOfOrigin" formControlName="countryOfOrigin" type="text" matInput placeholder="Country of Origin">
+            <mat-error *ngIf="f.countryOfOrigin.invalid && f.countryOfOrigin.touched">
+                Country of origin is required
+            </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Parent Company</mat-label>
+            <input name="parentCompany" formControlName="parentCompany" type="text" matInput placeholder="Parent Company">
+            <mat-error *ngIf="f.parentCompany.invalid && f.parentCompany.touched">
+                Parent company is required
+            </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Website</mat-label>
+            <input name="website" formControlName="website" type="text" matInput placeholder="Website">
+            <mat-error *ngIf="f.website.invalid && f.website.touched">
+                Website is required
+            </mat-error>
+        </mat-form-field>
+
+        <button type="submit" class="btn col-12 m-l-8" [disabled]="formCreateBrand.invalid">Submit</button>
+    </form>
+</div>

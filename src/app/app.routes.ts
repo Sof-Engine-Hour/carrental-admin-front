@@ -13,8 +13,8 @@ export const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    canActivate: [],
-    canActivateChild: [],
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
@@ -60,6 +60,10 @@ export const routes: Routes = [
       {
         path: 'vehicles',
         loadChildren: () => import('./routes/vehicles/vehicles.routes').then(m => m.route),
+      },
+      {
+        path: 'brands',
+        loadChildren: () => import('./routes/brands/brands.routes').then(m => m.routes),
       },
     ],
   },

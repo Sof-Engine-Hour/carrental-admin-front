@@ -1,13 +1,4 @@
-<!-- right-sidebar.component.html -->
-<div class="right-sidebar" [class.open]="isSidebarOpen" >
-    <div class="w-100 flex justify-between align-center bg-white p-x-8 r-4 ">
-        <h1 class="f-s-20">Create new vehicles</h1>
-        <div>
-            <button  class="btn" (click)="closeSidebar()">X</button>
-        </div>
-    </div>
-
-    <form class="row p-x-4">
+<form class="row p-x-4">
         <mat-form-field appearance="outline" class="col-6">
             <mat-label>model </mat-label>
             <input name="" type="text" matInput placeholder="model">
@@ -29,6 +20,5 @@
             <!-- <mat-hint>Hint</mat-hint> -->
         </mat-form-field>
         <button class="btn col-3 m-l-8" >Submit</button>
-    </form>
+</form>
 
-</div>

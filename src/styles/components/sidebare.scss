@@ -1,0 +1,21 @@
+.right-sidebar {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    right: -50vw;
+    height: 90vh;
+    width: 50vw;
+    background-color: white;
+    display: none;
+    box-shadow: -5px 0px rgba(0, 0, 0, 0.377);
+    z-index: 100;
+}
+
+.right-sidebar.open {
+    right: 0; 
+    display: block;
+}
+
+.sidebar-l{
+    width: 30% !important;
+}

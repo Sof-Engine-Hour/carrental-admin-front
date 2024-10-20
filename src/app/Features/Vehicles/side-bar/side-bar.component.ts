@@ -9,14 +9,4 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css',
 })
-export class SideBarComponent {
-  isSidebarOpen = false;
-
-  openSidebar() {
-    this.isSidebarOpen = true;
-  }
-
-  closeSidebar() {
-    this.isSidebarOpen = false;
-  }
-}
+export class SideBarComponent {}
