@@ -1,6 +1,36 @@
 <div>
-    <app-header-vehicles></app-header-vehicles>
+    <div class="w-100 flex justify-between align-center bg-white p-x-8 r-4 ">
+        <h1 class="f-s-20">Vehicles</h1>
+        <div>
+            <button (click)="sidebarVisible = true" class="btn">Create Vehicles</button>
+        </div>
+    </div>
+    
+    
+    @if(sidebarVisible){
+        <p-sidebar class="z-max" [(visible)]="sidebarVisible" position="right" styleClass="w-50"  >
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+                    <!-- <p-avatar 
+                        image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" 
+                        shape="circle" /> -->
+                    <span class="font-bold">
+                        Create vehicle
+                    </span>
+                </div>
+            </ng-template>
+            <app-create-vehicles [selectedVehicleId]="selectedVehicleId" (fetchData)="fetchVehicles()"></app-create-vehicles>
+        </p-sidebar>
+    }
+        
     <div>
-        <app-table-vehicles></app-table-vehicles>
+        @if (vehicles) {
+            <app-table-vehicles [selectedVehicleId]="selectedVehicleId" [vehiclesData]="vehicles" (fetchData)="fetchVehicles()"></app-table-vehicles>
+        } @else {
+            <div class="container-loader">
+                <div class="loader"></div>
+            </div>
+        }
+
     </div>
 </div>

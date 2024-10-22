@@ -1,58 +1,99 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { VehiclesService } from '../services/vehicles.service';
 import { TableModule } from 'primeng/table';
 import { DeleteDialogComponent } from 'app/Features/common/delete-dialog/delete-dialog.component';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
+import { VehicleType } from '../type';
+import { CreateVehiclesComponent } from '../create-vehicles/create-vehicles.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-table-vehicles',
   standalone: true,
-  imports: [TableModule, DeleteDialogComponent],
+  imports: [TableModule, DeleteDialogComponent, MtxGridModule],
   templateUrl: './table-vehicles.component.html',
   styleUrls: ['./table-vehicles.component.css'],
-  providers: [DialogService], // Ensure DialogService is provided
+  providers: [MtxGridModule],
 })
 export class TableVehiclesComponent {
-  vehicles: any = null;
+  @Input() vehiclesData: VehicleType[] | null = null;
+  @Output() fetchData = new EventEmitter<void>();
+  @Input() selectedVehicleId: number | null = 0;
+
   totalRecords: number = 0;
   rows: number = 5;
+  currentPage: number = 0;
 
+  showSidebar = false;
   constructor(
     private vehiclesService: VehiclesService,
-    private dialogService: DialogService
+    private snackBar: MatSnackBar
   ) {}
 
-  fetchVehicles(page: number = 0, size: number = this.rows): void {
-    this.vehiclesService.getVehicles(page, size).subscribe(res => {
-      this.vehicles = res.content;
-    });
-  }
+  columns: MtxGridColumn[] = [
+    { header: 'Matricule', field: 'matricule' },
+    { header: 'Model', field: 'model.name' },
+    { header: 'Color', field: 'color' },
+    { header: 'Top Speed', field: 'model.topSpeed' },
+    { header: 'Price', field: 'price' },
+    {
+      header: 'Operation',
+      field: 'operation',
+      width: '180px',
+      pinned: 'right',
+      right: '0px',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          text: 'edit',
+          icon: 'edit',
+          tooltip: 'Edit',
+          click: vehicle => (this.selectedVehicleId = vehicle.id),
+        },
+        {
+          type: 'icon',
+          text: 'delete',
+          icon: 'delete',
+          tooltip: 'Delete',
+          color: 'warn',
+          pop: 'Confirm delete?',
+          click: vehicle => this.handelDelete(vehicle.id),
+        },
+      ],
+    },
+  ];
 
   onPageChange(event: any): void {
-    const page = event.first / event.rows;
-    this.fetchVehicles(page, event.rows);
+    const page = event.pageIndex;
+    this.currentPage = page;
+    this.fetchData.emit();
+    console.log(event);
   }
 
-  ngOnInit() {
-    this.fetchVehicles();
+  handelDelete(id: number) {
+    this.vehiclesService.deleteVehicles(id).subscribe({
+      next: () => {
+        console.log('deleted');
+        this.fetchData.emit();
+        this.snackBar.open('Vehicle deleted successfully!', 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+        });
+      },
+      error: err => {
+        this.snackBar.open('Vehicle deleted successfully!', 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+        });
+        this.fetchData.emit();
+
+        console.error('Delete failed', err);
+      },
+    });
   }
 
-  // Open the delete dialog
-  confirmDelete(vehicle: any) {
-    const ref: DynamicDialogRef = this.dialogService.open(DeleteDialogComponent, {
-      header: 'Confirm Deletion',
-      width: '25rem',
-      data: { vehicle },
-    });
-    console.log(vehicle.id);
-
-    ref.onClose.subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        console.log('confirmed');
-        this.vehiclesService.deleteVehicles(vehicle.id);
-        // this.vehiclesService.deleteVehicles(vehicle.id);
-        // this.fetchVehicles(0, 100);
-      }
-    });
+  trackByName(index: number, item: any) {
+    return item.name;
   }
 }
