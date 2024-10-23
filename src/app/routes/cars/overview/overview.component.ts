@@ -71,10 +71,12 @@ export class OverviewComponent {
       width: '100px',
     },
     {
-      header: this.translate.stream('mobile'),
-      field: 'mobile',
-      hide: true,
-      minWidth: 120,
+      header: this.translate.stream('Fuel Type'),
+      field: 'fuelType',
+      sortable: true,
+      disabled: true,
+      minWidth: 100,
+      width: '150px',
     },
     {
       header: this.translate.stream('Mileage'),
@@ -87,6 +89,22 @@ export class OverviewComponent {
       field: 'price',
       minWidth: 180,
     },
+    {
+      header: this.translate.stream('Doors'),
+      field: 'numberOfDoors',
+      minWidth: 180,
+    },
+    {
+      header: this.translate.stream('Top Speed'),
+      field: 'topSpeed',
+      minWidth: 180,
+    },
+    {
+      header: this.translate.stream('Fuel Efficiency'),
+      field: 'fuelEfficiency',
+      minWidth: 180,
+    },
+    
     {
       header: this.translate.stream('operation'),
       field: 'operation',

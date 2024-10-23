@@ -4,10 +4,15 @@ export interface CarResponse {
     model : ModelResponse ,
     modelName : string ,
     brandName:string,
+    fuelType:string ,
     color : string ,
     mileage : number ,
     price : number ,
     matricule : string ,
+    numberOfDoors:number ,
+    topSpeed:number ,
+    fuelEfficiency:number
+    
 }
 
 export interface CarRequest {
