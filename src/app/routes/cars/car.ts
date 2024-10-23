@@ -17,6 +17,18 @@ export interface CarRequest {
     price : number ,
 }
 
+
+export interface PaginatedCarResponse {
+    content: CarResponse[]; // This is where the actual cars are
+    totalElements: number;
+    totalPages: number;
+    size: number;
+    number: number; // Current page number
+    first: boolean;
+    last: boolean;
+    empty: boolean;
+}
+
 export interface BrandResponse {
 
     id :number ,

@@ -1,0 +1,61 @@
+
+
+@if (vehicle || selectedVehicleId == 0) {
+    <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="col-6">
+          <mat-label>Matricule</mat-label>
+          <input matInput formControlName="matricule" placeholder="Enter matricule" />
+          <mat-error *ngIf="f.matricule.invalid && (f.matricule.dirty || f.matricule.touched)">
+            Matricule is required
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field appearance="fill" class="col-6">
+          <mat-label>Model</mat-label>
+          <input matInput type="number" formControlName="model" placeholder="Enter model" />
+          <mat-error *ngIf="f.model.invalid && (f.model.dirty || f.model.touched)">
+            Model is required and must be greater than 0
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field appearance="fill" class="col-6">
+          <mat-label>Color</mat-label>
+          <input matInput formControlName="color" placeholder="Enter color" />
+          <mat-error *ngIf="f.color.invalid && (f.color.dirty || f.color.touched)">
+            Color is required
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field appearance="fill" class="col-6">
+          <mat-label>Mileage</mat-label>
+          <input matInput type="number" formControlName="mileage" placeholder="Enter mileage" />
+          <mat-error *ngIf="f.mileage.invalid && (f.mileage.dirty || f.mileage.touched)">
+            Mileage is required and must be a positive number
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field appearance="fill" class="col-6">
+          <mat-label>Year</mat-label>
+          <input matInput type="date" formControlName="year" />
+          <mat-error *ngIf="f.year.invalid && (f.year.dirty || f.year.touched)">
+            Year is required
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field appearance="fill" class="col-6">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price" placeholder="Enter price" />
+          <mat-error *ngIf="f.price.invalid && (f.price.dirty || f.price.touched)">
+            Price is required and must be a positive number
+          </mat-error>
+        </mat-form-field>
+      
+        <button mat-raised-button color="primary" type="submit" [disabled]="vehicleForm.invalid">
+          Submit
+        </button>
+    </form>
+} @else {
+    <div class="container-loader">
+        <div class="loader"></div>
+    </div>
+}
