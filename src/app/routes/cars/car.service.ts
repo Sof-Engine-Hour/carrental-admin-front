@@ -43,8 +43,10 @@ export class CarService {
                     return {
                       ...car,
                       matricule: car.matricule.charAt(0).toUpperCase() + car.matricule.slice(1).toLowerCase() ,
-                      color: car.color.charAt(0).toUpperCase() + car.color.slice(1).toLowerCase()
-
+                      color: car.color.charAt(0).toUpperCase() + car.color.slice(1).toLowerCase(),
+                      modelName: car.model.name.charAt(0).toUpperCase() + car.model.name.slice(1).toLowerCase() ,
+                      brandName: car.model.brand.name.charAt(0).toUpperCase() + car.model.name.slice(1).toLowerCase() ,
+ 
                     };
                   });
                   return response;

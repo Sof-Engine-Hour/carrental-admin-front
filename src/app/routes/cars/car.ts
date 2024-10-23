@@ -1,8 +1,9 @@
 export interface CarResponse {
     id:number ,
     year:Date
-    brand : BrandResponse ,
     model : ModelResponse ,
+    modelName : string ,
+    brandName:string,
     color : string ,
     mileage : number ,
     price : number ,

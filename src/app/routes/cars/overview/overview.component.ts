@@ -47,7 +47,7 @@ export class OverviewComponent {
       width: '100px',
     },
     {
-      header: this.translate.stream('color'),
+      header: this.translate.stream('Color'),
       field: 'color',
       sortable: true,
       disabled: true,
@@ -55,19 +55,20 @@ export class OverviewComponent {
       width: '100px',
     },
     {
-      header: this.translate.stream('weight'),
-      field: 'weight',
+      header: this.translate.stream('Brand'),
+      field: 'brandName',
+      sortable: true,
+      disabled: true,
       minWidth: 100,
+      width: '100px',
     },
     {
-      header: this.translate.stream('symbol'),
-      field: 'symbol',
+      header: this.translate.stream('Model'),
+      field: 'modelName',
+      sortable: true,
+      disabled: true,
       minWidth: 100,
-    },
-    {
-      header: this.translate.stream('gender'),
-      field: 'gender',
-      minWidth: 100,
+      width: '100px',
     },
     {
       header: this.translate.stream('mobile'),
@@ -76,40 +77,14 @@ export class OverviewComponent {
       minWidth: 120,
     },
     {
-      header: this.translate.stream('tele'),
-      field: 'tele',
+      header: this.translate.stream('Mileage'),
+      field: 'mileage',
       minWidth: 120,
       width: '120px',
     },
     {
-      header: this.translate.stream('birthday'),
-      field: 'birthday',
-      minWidth: 180,
-    },
-    {
-      header: this.translate.stream('city'),
-      field: 'city',
-      minWidth: 120,
-    },
-    {
-      header: this.translate.stream('address'),
-      field: 'address',
-      minWidth: 180,
-      width: '200px',
-    },
-    {
-      header: this.translate.stream('company'),
-      field: 'company',
-      minWidth: 120,
-    },
-    {
-      header: this.translate.stream('website'),
-      field: 'website',
-      minWidth: 180,
-    },
-    {
-      header: this.translate.stream('email'),
-      field: 'email',
+      header: this.translate.stream('Price'),
+      field: 'price',
       minWidth: 180,
     },
     {
