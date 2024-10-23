@@ -2,7 +2,7 @@
     <div class="w-100 flex justify-between align-center bg-white p-x-8 r-4 ">
         <h1 class="f-s-20">Vehicles</h1>
         <div>
-            <button (click)="sidebarVisible = true" class="btn">Create Vehicles</button>
+            <button (click)="CreateNewVehicle()" class="btn">Create Vehicles</button>
         </div>
     </div>
     
@@ -25,7 +25,7 @@
         
     <div>
         @if (vehicles) {
-            <app-table-vehicles [selectedVehicleId]="selectedVehicleId" [vehiclesData]="vehicles" (fetchData)="fetchVehicles()"></app-table-vehicles>
+            <app-table-vehicles (updateSelectedVehicleId)="updateSelectedVehicleId($event)" [vehiclesData]="vehicles" (fetchData)="fetchVehicles()"></app-table-vehicles>
         } @else {
             <div class="container-loader">
                 <div class="loader"></div>

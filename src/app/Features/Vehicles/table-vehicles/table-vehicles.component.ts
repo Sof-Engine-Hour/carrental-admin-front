@@ -16,9 +16,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providers: [MtxGridModule],
 })
 export class TableVehiclesComponent {
-  @Input() vehiclesData: VehicleType[] | null = null;
+  @Input() vehiclesData: any = null;
   @Output() fetchData = new EventEmitter<void>();
-  @Input() selectedVehicleId: number | null = 0;
+  @Output() updateSelectedVehicleId = new EventEmitter<number>();
 
   totalRecords: number = 0;
   rows: number = 5;
@@ -49,7 +49,7 @@ export class TableVehiclesComponent {
           text: 'edit',
           icon: 'edit',
           tooltip: 'Edit',
-          click: vehicle => (this.selectedVehicleId = vehicle.id),
+          click: vehicle => this.updateSelectedVehicleId.emit(vehicle.id),
         },
         {
           type: 'icon',

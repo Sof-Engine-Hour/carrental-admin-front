@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { BrandsService } from '../../services/brands.service';
 import { Brand } from '../../types/type';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { VehicleType } from 'app/Features/Vehicles/type';
 
 @Component({
   selector: 'app-create-brand',
@@ -19,6 +20,7 @@ export class CreateBrandComponent implements OnInit {
   @Input() brandId: number | null = null; // Input for brand ID
   brand: Brand | null = null;
   @Output() brandCreated = new EventEmitter<void>();
+  vehicle: VehicleType | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +28,6 @@ export class CreateBrandComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Initialize the form with validators
     this.formCreateBrand = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       countryOfOrigin: ['', Validators.required],
@@ -34,7 +35,6 @@ export class CreateBrandComponent implements OnInit {
       website: ['', Validators.required],
     });
 
-    // If a brandId is provided, fetch the brand details
     if (this.brandId) {
       this.brandsService.getBrandById(this.brandId).subscribe(data => {
         this.brand = data;

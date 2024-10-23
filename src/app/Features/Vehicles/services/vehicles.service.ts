@@ -15,7 +15,7 @@ export class VehiclesService {
   }
 
   getVehiclesById(id: number): Observable<any> {
-    return this.http.get<any>(environment.backend1 + `/vehicules/${id}`);
+    return this.http.get<VehicleType>(environment.backend1 + `/vehicules/${id}`);
   }
 
   deleteVehicles(id: number): Observable<any> {

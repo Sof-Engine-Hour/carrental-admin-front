@@ -18,7 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CreateVehiclesComponent {
   vehicleForm: FormGroup;
   @Output() fetchData = new EventEmitter<void>();
-  @Input() selectedVehicleId: number | null = null;
+  @Input() selectedVehicleId: number = 0;
+  vehicle: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +62,19 @@ export class CreateVehiclesComponent {
   }
 
   ngOnInit() {
-    console.log('test');
+    if (this.selectedVehicleId != 0) {
+      this.vehiclesService.getVehiclesById(this.selectedVehicleId).subscribe(data => {
+        this.vehicle = data;
+        this.vehicleForm.patchValue({
+          matricule: this.vehicle?.matricule,
+          model: 22,
+          color: this.vehicle?.color,
+          mileage: this.vehicle?.mileage,
+          year: new Date(),
+          price: this.vehicle?.price,
+        });
+      });
+    }
 
     console.log('from create ', this.selectedVehicleId);
   }

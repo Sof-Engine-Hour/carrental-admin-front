@@ -26,19 +26,28 @@ export class VehiclesComponent {
   totalRecords: number = 0;
   rows: number = 5;
   currentPage: number = 0;
-  selectedVehicleId: number | null = 0;
+  selectedVehicleId: number = 0;
 
   constructor(private vehiclesService: VehiclesService) {}
 
   fetchVehicles(page: number = 0, size: number = this.rows): void {
+    this.sidebarVisible = false;
     this.vehiclesService.getVehicles(page, size).subscribe(res => {
       this.vehicles = res.content;
       this.totalRecords = res.totalElements;
     });
-    console.log('======================>', this.selectedVehicleId);
   }
 
+  updateSelectedVehicleId(id: number) {
+    this.selectedVehicleId = id;
+    this.sidebarVisible = true;
+  }
   ngOnInit() {
     this.fetchVehicles();
+  }
+
+  CreateNewVehicle() {
+    this.selectedVehicleId = 0;
+    this.sidebarVisible = true;
   }
 }
