@@ -12,6 +12,8 @@ import { TablesDataService } from '../data.service';
 import { TablesKitchenSinkEditComponent } from './edit/edit.component';
 
 import { CarService } from '../car.service';
+import { PageEvent } from '@angular/material/paginator';
+import { warn } from 'console';
 
 @Component({
   selector: 'app-overview',
@@ -138,6 +140,7 @@ export class OverviewComponent {
       ],
     },
   ];
+
   list: any[] = [];
   isLoading = true;
 
@@ -153,6 +156,13 @@ export class OverviewComponent {
   showPaginator = true;
   expandable = false;
   columnResizable = false;
+
+
+  query = {
+    q: 'user:nzbin',
+    page: 0,
+    per_page: 5,
+  };
 
   ngOnInit() {
     this.list = this.dataSrv.getData();
@@ -193,5 +203,19 @@ export class OverviewComponent {
 
   updateList() {
     this.list = this.list.splice(-1).concat(this.list);
+  }
+
+
+  getList(page : number , size : number){
+    this.carService.getListOfCars(page , size).subscribe(
+      cars => this.list = cars 
+    )
+  }
+
+  getNextPage(e: PageEvent) {
+    this.query.page = e.pageIndex;
+    this.query.per_page = e.pageSize;
+
+    this.getList(this.query.page , this.query.per_page ) ;
   }
 }
