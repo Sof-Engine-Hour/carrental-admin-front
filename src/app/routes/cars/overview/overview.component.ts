@@ -13,7 +13,8 @@ import { TablesKitchenSinkEditComponent } from './edit/edit.component';
 
 import { CarService } from '../car.service';
 import { PageEvent } from '@angular/material/paginator';
-import { warn } from 'console';
+import { PaginatedCarResponse } from '../car';
+
 
 @Component({
   selector: 'app-overview',
@@ -39,15 +40,15 @@ export class OverviewComponent {
 
   columns: MtxGridColumn[] = [
     {
-      header: this.translate.stream('position'),
-      field: 'position',
+      header: this.translate.stream('Matricule'),
+      field: 'matricule',
       sortable: true,
       minWidth: 100,
       width: '100px',
     },
     {
-      header: this.translate.stream('name'),
-      field: 'name',
+      header: this.translate.stream('color'),
+      field: 'color',
       sortable: true,
       disabled: true,
       minWidth: 100,
@@ -143,6 +144,7 @@ export class OverviewComponent {
 
   list: any[] = [];
   isLoading = true;
+  total: number = 0 ;
 
   multiSelectable = true;
   rowSelectable = true;
@@ -165,7 +167,8 @@ export class OverviewComponent {
   };
 
   ngOnInit() {
-    this.list = this.dataSrv.getData();
+    this.getList(this.query.page ,this.query.per_page);
+    // this.list = this.dataSrv.getData();
     this.isLoading = false;
   }
 
@@ -207,15 +210,18 @@ export class OverviewComponent {
 
 
   getList(page : number , size : number){
+    
     this.carService.getListOfCars(page , size).subscribe(
-      cars => this.list = cars 
+      (carsPaginate: PaginatedCarResponse) => {
+        this.list = carsPaginate.content;
+        this.query.page = carsPaginate.totalPages ;
+        this.query.per_page = carsPaginate.size ;
+        this.isLoading = false;
+      }
     )
   }
 
   getNextPage(e: PageEvent) {
-    this.query.page = e.pageIndex;
-    this.query.per_page = e.pageSize;
-
-    this.getList(this.query.page , this.query.per_page ) ;
+    this.getList(e.pageIndex , e.pageSize ) ;
   }
 }

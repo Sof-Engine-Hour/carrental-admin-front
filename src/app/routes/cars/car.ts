@@ -6,6 +6,7 @@ export interface CarResponse {
     color : string ,
     mileage : number ,
     price : number ,
+    matricule : string ,
 }
 
 export interface CarRequest {

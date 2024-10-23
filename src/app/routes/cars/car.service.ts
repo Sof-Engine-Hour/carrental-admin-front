@@ -29,15 +29,26 @@ export class CarService {
   }
 
 
-  getListOfCars(page : number , size :number) : Observable<CarResponse[]> {
+  getListOfCars(page : number , size :number) : Observable<PaginatedCarResponse> {
 
     const params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString());
 
     return this.http.get<PaginatedCarResponse>( `${environment.backend1}/vehicules`, { params })
-                                      .pipe(
-                                        map(paginatedCarResponse => paginatedCarResponse.content)
-                                      ) ;
+              .pipe(
+                map(response => {
+                  // Transform the matricule field for each car in the content array
+                  response.content = response.content.map(car => {
+                    return {
+                      ...car,
+                      matricule: car.matricule.charAt(0).toUpperCase() + car.matricule.slice(1).toLowerCase() ,
+                      color: car.color.charAt(0).toUpperCase() + car.color.slice(1).toLowerCase()
+
+                    };
+                  });
+                  return response;
+                })
+              );
   }
 }

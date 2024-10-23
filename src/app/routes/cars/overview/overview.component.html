@@ -49,6 +49,7 @@
           [pageSizeOptions]="[5,10,50,100]"
           [pageIndex]="query.page"
           [pageSize]="query.per_page"
+          [length]="total"
           (sortChange)="changeSort($event)"
           (selectionChange)="changeSelect($event)"
           (page)="getNextPage($event)"
